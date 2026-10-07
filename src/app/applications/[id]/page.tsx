@@ -57,11 +57,11 @@ const STATUS_CONFIG: Record<string, { bg: string; text: string; label: string }>
 };
 
 export default function ApplicationDetailPage() {
-  const params = useParams();
-  const [app, setApp] = useState<ApplicationDetail | null>(null);
+  useParams();
+  const [app] = useState<ApplicationDetail | null>(DEMO_APP);
 
   useEffect(() => {
-    setApp(DEMO_APP);
+    // Demo data is set as initial state
   }, []);
 
   if (!app) {

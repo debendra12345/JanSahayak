@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import {
   FileText,
@@ -24,7 +24,7 @@ interface Application {
   nextAction?: string;
 }
 
-const statusConfig: Record<Application["status"], { label: string; color: string; bgColor: string; icon: any }> = {
+const statusConfig: Record<Application["status"], { label: string; color: string; bgColor: string; icon: React.ComponentType<{ className?: string }> }> = {
   DRAFT: { label: "Draft", color: "text-gray-700", bgColor: "bg-gray-50", icon: FileText },
   DOCUMENTS_PENDING: { label: "Documents Pending", color: "text-amber-700", bgColor: "bg-amber-50", icon: AlertCircle },
   SUBMITTED: { label: "Submitted", color: "text-blue-700", bgColor: "bg-blue-50", icon: CheckCircle },
@@ -35,66 +35,44 @@ const statusConfig: Record<Application["status"], { label: string; color: string
 };
 
 export default function ApplicationsPage() {
-  const [applications, setApplications] = useState<Application[]>([]);
-  const [loading, setLoading] = useState(true);
+  const demoApplications: Application[] = [
+    {
+      id: "app_1",
+      schemeId: "pm-yasasvi",
+      schemeName: "PM YASASVI Scholarship",
+      applicationNumber: "YASASVI-2026-OCT-12345",
+      status: "SUBMITTED",
+      submittedAt: "2026-10-05",
+      expectedProcessingDays: 30,
+      expectedCompletionDate: "2026-11-05",
+      lastUpdated: "2026-10-05",
+      nextAction: "Check application status around 27 October",
+    },
+    {
+      id: "app_2",
+      schemeId: "nsp-post-matric",
+      schemeName: "Post Matric Scholarship (NSP)",
+      status: "DOCUMENTS_PENDING",
+      lastUpdated: "2026-10-03",
+      nextAction: "Upload category certificate and income certificate",
+    },
+    {
+      id: "app_3",
+      schemeId: "pragati-girls",
+      schemeName: "AICTE Pragati Scholarship for Girls",
+      status: "DRAFT",
+      lastUpdated: "2026-10-01",
+      nextAction: "Complete application form and submit",
+    },
+  ];
+
+  const [applications] = useState<Application[]>(demoApplications);
   const [filter, setFilter] = useState<"all" | Application["status"]>("all");
-
-  useEffect(() => {
-    // Demo data - in production, fetch from API
-    const demoApplications: Application[] = [
-      {
-        id: "app_1",
-        schemeId: "pm-yasasvi",
-        schemeName: "PM YASASVI Scholarship",
-        applicationNumber: "YASASVI-2026-OCT-12345",
-        status: "SUBMITTED",
-        submittedAt: "2026-10-05",
-        expectedProcessingDays: 30,
-        expectedCompletionDate: "2026-11-05",
-        lastUpdated: "2026-10-05",
-        nextAction: "Check application status around 27 October",
-      },
-      {
-        id: "app_2",
-        schemeId: "nsp-post-matric",
-        schemeName: "Post Matric Scholarship (NSP)",
-        status: "DOCUMENTS_PENDING",
-        lastUpdated: "2026-10-03",
-        nextAction: "Upload category certificate and income certificate",
-      },
-      {
-        id: "app_3",
-        schemeId: "pragati-girls",
-        schemeName: "AICTE Pragati Scholarship for Girls",
-        status: "DRAFT",
-        lastUpdated: "2026-10-01",
-        nextAction: "Complete application form and submit",
-      },
-    ];
-
-    setApplications(demoApplications);
-    setLoading(false);
-  }, []);
 
   const filteredApplications =
     filter === "all"
       ? applications
       : applications.filter((app) => app.status === filter);
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gray-50 py-8 px-4">
-        <div className="max-w-4xl mx-auto">
-          <div className="h-10 bg-gray-200 rounded animate-pulse mb-6" />
-          <div className="space-y-4">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="h-32 bg-gray-200 rounded animate-pulse" />
-            ))}
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4">
@@ -179,7 +157,7 @@ export default function ApplicationsPage() {
                     <div className="flex items-start justify-between gap-4">
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-2">
-                          <IconComponent size={20} className={config.color} />
+                          <IconComponent className={`${config.color} w-5 h-5`} />
                           <h3 className="text-lg font-bold text-gray-900">
                             {app.schemeName}
                           </h3>
@@ -231,7 +209,7 @@ export default function ApplicationsPage() {
         <div className="mt-8 bg-blue-50 border border-blue-200 rounded-lg p-6">
           <h3 className="font-semibold text-blue-900 mb-2">Need help with your application?</h3>
           <p className="text-sm text-blue-800 mb-4">
-            JanSahayak's assistant can help you understand the next steps and provide guidance through the process.
+            JanSahayak&apos;s assistant can help you understand the next steps and provide guidance through the process.
           </p>
           <Link
             href="/assistant"

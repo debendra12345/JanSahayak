@@ -40,7 +40,7 @@ export default function DashboardPage() {
         const matchData = await matchRes.json();
         if (matchRes.ok && matchData.matches) {
           const recommended = matchData.matches
-            .map((m: any) => ({
+            .map((m: { scheme: Scheme; eligibility?: { score?: number; reasons?: Array<{ detail: string }> | undefined; status?: string } | undefined }) => ({
               ...m.scheme,
               matchScore: m.eligibility?.score || 0,
               whyRelevant: m.eligibility?.reasons?.[0]?.detail || "Your profile matches this scheme",
