@@ -1,0 +1,213 @@
+import { Scheme } from "./types";
+
+/**
+ * Seed data for government welfare schemes shown in Janसहायक.
+ * Each scheme includes a real official government portal URL so the
+ * "verified source" step in the demo links to an authentic destination.
+ */
+export const SCHEMES: Scheme[] = [
+  {
+    id: "pm-yasasvi",
+    name: "PM YASASVI Scholarship",
+    nameHindi: "पीएम यशस्वी छात्रवृत्ति",
+    department: "Ministry of Social Justice & Empowerment",
+    description:
+      "Top-class scholarship for OBC, EBC and DNT students pursuing school or college education, covering tuition support and maintenance allowance.",
+    benefit: "Up to ₹1,25,000/year for tuition, hostel & maintenance",
+    rules: {
+      minAge: 13,
+      maxAge: 32,
+      categories: ["OBC"],
+      maxFamilyIncome: 250000,
+      educationLevels: ["School", "Undergraduate", "Postgraduate"],
+      occupations: ["student"],
+    },
+    documents: [
+      "Aadhaar Card",
+      "Caste Certificate (OBC/EBC/DNT)",
+      "Income Certificate",
+      "Previous year mark sheet",
+      "Bonafide Student Certificate",
+      "Bank Passbook (linked to Aadhaar)",
+    ],
+    officialUrl: "https://yet.nta.ac.in",
+    verifiedBy: "Ministry of Social Justice & Empowerment, Govt of India",
+    lastVerified: "2025-09-01",
+    category: "Scholarship",
+  },
+  {
+    id: "nsp-post-matric",
+    name: "Post Matric Scholarship (NSP)",
+    nameHindi: "पोस्ट मैट्रिक छात्रवृत्ति",
+    department: "National Scholarship Portal",
+    description:
+      "Financial assistance for SC/ST/OBC/Minority students studying at post-matriculation or post-secondary stage to complete their education without financial hardship.",
+    benefit: "Tuition fee reimbursement + maintenance allowance",
+    rules: {
+      minAge: 15,
+      maxAge: 35,
+      categories: ["SC", "ST", "OBC", "EWS"],
+      maxFamilyIncome: 250000,
+      educationLevels: ["Undergraduate", "Postgraduate", "Diploma"],
+      occupations: ["student"],
+    },
+    documents: [
+      "Aadhaar Card",
+      "Caste Certificate",
+      "Income Certificate",
+      "Previous year mark sheet",
+      "Bonafide Student Certificate",
+      "Bank Passbook (linked to Aadhaar)",
+    ],
+    officialUrl: "https://scholarships.gov.in",
+    verifiedBy: "Ministry of Social Justice & Empowerment, Govt of India",
+    lastVerified: "2025-08-15",
+    category: "Scholarship",
+  },
+  {
+    id: "pragati-girls",
+    name: "AICTE Pragati Scholarship for Girls",
+    nameHindi: "प्रगति छात्रवृत्ति (बालिकाओं हेतु)",
+    department: "All India Council for Technical Education (AICTE)",
+    description:
+      "Supports girl students admitted into technical diploma or degree programs, easing the financial burden of pursuing technical education.",
+    benefit: "₹50,000/year for tuition fee + incidentals",
+    rules: {
+      minAge: 15,
+      maxAge: 30,
+      gender: "Female",
+      categories: ["Any"],
+      maxFamilyIncome: 800000,
+      educationLevels: ["Diploma", "Undergraduate"],
+      occupations: ["student"],
+    },
+    documents: [
+      "Aadhaar Card",
+      "Income Certificate",
+      "Admission / Fee Receipt (Technical Course)",
+      "Previous year mark sheet",
+      "Bank Passbook (linked to Aadhaar)",
+    ],
+    officialUrl: "https://www.aicte-pragati-saksham-gov.in",
+    verifiedBy: "AICTE, Ministry of Education, Govt of India",
+    lastVerified: "2025-07-20",
+    category: "Scholarship",
+  },
+  {
+    id: "saksham-pwd",
+    name: "AICTE Saksham Scholarship",
+    nameHindi: "सक्षम छात्रवृत्ति",
+    department: "All India Council for Technical Education (AICTE)",
+    description:
+      "Scholarship for differently-abled students pursuing technical education to support tuition fees and special aids.",
+    benefit: "₹50,000/year for tuition fee + incidentals",
+    rules: {
+      minAge: 15,
+      maxAge: 30,
+      categories: ["Any"],
+      maxFamilyIncome: 800000,
+      educationLevels: ["Diploma", "Undergraduate"],
+      requiresDisability: true,
+      occupations: ["student"],
+    },
+    documents: [
+      "Aadhaar Card",
+      "Disability Certificate (40%+)",
+      "Income Certificate",
+      "Admission / Fee Receipt (Technical Course)",
+      "Bank Passbook (linked to Aadhaar)",
+    ],
+    officialUrl: "https://www.aicte-pragati-saksham-gov.in",
+    verifiedBy: "AICTE, Ministry of Education, Govt of India",
+    lastVerified: "2025-07-20",
+    category: "Scholarship",
+  },
+  {
+    id: "csss-ug-pg",
+    name: "Central Sector Scheme of Scholarship (CSSS)",
+    nameHindi: "केंद्रीय क्षेत्र छात्रवृत्ति योजना",
+    department: "Ministry of Education",
+    description:
+      "Merit-based scholarship for meritorious students from low-income families to pursue college/university education (General merit scheme).",
+    benefit: "₹12,000/year for graduation, ₹20,000/year for post-graduation",
+    rules: {
+      minAge: 16,
+      maxAge: 30,
+      categories: ["Any"],
+      maxFamilyIncome: 450000,
+      educationLevels: ["Undergraduate", "Postgraduate"],
+      occupations: ["student"],
+    },
+    documents: [
+      "Aadhaar Card",
+      "Class 12 Mark Sheet (above 80 percentile)",
+      "Income Certificate",
+      "Bonafide Student Certificate",
+      "Bank Passbook (linked to Aadhaar)",
+    ],
+    officialUrl: "https://scholarships.gov.in",
+    verifiedBy: "Ministry of Education, Govt of India",
+    lastVerified: "2025-08-01",
+    category: "Scholarship",
+  },
+  {
+    id: "nmms",
+    name: "National Means-cum-Merit Scholarship (NMMS)",
+    nameHindi: "राष्ट्रीय साधन सह प्रतिभा छात्रवृत्ति",
+    department: "Ministry of Education",
+    description:
+      "Scholarship to meritorious students from economically weaker sections to arrest their drop-out at class 8 and encourage them to continue up to class 12.",
+    benefit: "₹12,000/year (Class 9 to 12)",
+    rules: {
+      minAge: 12,
+      maxAge: 18,
+      categories: ["Any"],
+      maxFamilyIncome: 350000,
+      educationLevels: ["School"],
+      occupations: ["student"],
+    },
+    documents: [
+      "Aadhaar Card",
+      "Income Certificate",
+      "Class 7/8 Mark Sheet",
+      "Bonafide Student Certificate",
+      "Bank Passbook (linked to Aadhaar)",
+    ],
+    officialUrl: "https://scholarships.gov.in",
+    verifiedBy: "Ministry of Education, Govt of India",
+    lastVerified: "2025-06-10",
+    category: "Scholarship",
+  },
+  {
+    id: "pm-vidyalakshmi",
+    name: "PM Vidyalaxmi Education Loan Scheme",
+    nameHindi: "पीएम विद्यालक्ष्मी शिक्षा ऋण योजना",
+    department: "Department of Higher Education",
+    description:
+      "Collateral-free education loans with interest subvention for students securing admission in quality higher education institutions.",
+    benefit: "Interest subsidy of 3% on education loans up to ₹10 lakh",
+    rules: {
+      minAge: 17,
+      maxAge: 35,
+      categories: ["Any"],
+      maxFamilyIncome: 800000,
+      educationLevels: ["Undergraduate", "Postgraduate", "Diploma"],
+      occupations: ["student"],
+    },
+    documents: [
+      "Aadhaar Card",
+      "Admission Letter from recognized institution",
+      "Income Certificate",
+      "PAN Card",
+      "Bank Account Details",
+    ],
+    officialUrl: "https://www.vidyalakshmi.co.in",
+    verifiedBy: "Department of Higher Education, Govt of India",
+    lastVerified: "2025-09-10",
+    category: "Financial Aid",
+  },
+];
+
+export function getSchemeById(id: string): Scheme | undefined {
+  return SCHEMES.find((s) => s.id === id);
+}
