@@ -84,3 +84,76 @@ export interface SavedApplication {
   createdAt: string;
   updatedAt: string;
 }
+
+// Document Checklist
+export type DocumentStatus = "NOT_AVAILABLE" | "NEEDED" | "AVAILABLE" | "UPLOADED" | "VERIFIED";
+
+export interface Document {
+  id: string;
+  name: string;
+  description: string;
+  required: boolean;
+  status: DocumentStatus;
+  verificationStatus?: "pending" | "verified" | "rejected";
+}
+
+export interface DocumentChecklist {
+  schemeId: string;
+  userId: string;
+  documents: Document[];
+  completedAt?: string;
+}
+
+// Application Tracking
+export type ApplicationTrackingStatus = 
+  | "DRAFT" 
+  | "DOCUMENTS_PENDING" 
+  | "SUBMITTED" 
+  | "UNDER_REVIEW" 
+  | "APPROVED" 
+  | "REJECTED" 
+  | "COMPLETED";
+
+export interface ApplicationTracking {
+  id: string;
+  userId: string;
+  schemeId: string;
+  schemeName: string;
+  applicationNumber?: string;
+  status: ApplicationTrackingStatus;
+  submittedAt?: string;
+  expectedProcessingDays?: number;
+  expectedCompletionDate?: string;
+  lastUpdated: string;
+  nextAction?: string;
+  notes?: string;
+}
+
+// Reminders
+export type ReminderStatus = "UPCOMING" | "COMPLETED" | "DISMISSED";
+
+export interface Reminder {
+  id: string;
+  userId: string;
+  applicationId: string;
+  title: string;
+  description?: string;
+  reminderDate: string;
+  status: ReminderStatus;
+  createdAt: string;
+}
+
+// Source Verification
+export type SourceTrustStatus = "VERIFIED" | "NEEDS_REVIEW" | "UNVERIFIED";
+export type FreshnessStatus = "CURRENT" | "AGING" | "OUTDATED";
+
+export interface SourceVerification {
+  schemeId: string;
+  officialDomain?: string;
+  sourceUrl?: string;
+  isOfficial: boolean;
+  lastVerifiedAt: string;
+  sourceStatus: SourceTrustStatus;
+  freshnessStatus: FreshnessStatus;
+  conflictStatus?: string;
+}

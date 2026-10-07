@@ -176,7 +176,12 @@ export default function SchemeDetailPage({
             <p>{explanation.text}</p>
           </div>
         )}
-        {eligibility && <EligibilityBreakdown reasons={eligibility.reasons} />}
+        {eligibility && (
+          <EligibilityBreakdown 
+            reasons={eligibility.reasons} 
+            status={eligibility.status as "Eligible" | "Likely Eligible" | "Not Eligible"}
+          />
+        )}
       </div>
 
       {/* Documents */}
