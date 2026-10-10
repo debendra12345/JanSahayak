@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    let result = await extractProfile(text);
+    const result = await extractProfile(text);
 
     // Apply structured field overrides (prefer structured fields over extracted values)
     if (overrides.age !== undefined) result.profile.age = overrides.age;
