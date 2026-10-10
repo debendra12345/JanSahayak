@@ -38,6 +38,12 @@ export default function Navbar() {
 
         <div className="flex items-center gap-2">
           <Link
+            href="/dashboard"
+            className="hidden sm:inline-block rounded-lg px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100"
+          >
+            Dashboard
+          </Link>
+          <Link
             href="/discover"
             className="rounded-lg bg-orange-600 px-4 py-2 text-sm font-semibold text-white shadow-md transition hover:bg-orange-700 sm:px-5"
           >

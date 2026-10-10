@@ -16,7 +16,7 @@ export default function BrowseSchemeCard({
 }: BrowseSchemeCardProps) {
   return (
     <Link
-      href={`/scheme/${scheme.id}`}
+      href={`/schemes/${scheme.id}`}
       className="group flex flex-col gap-3 rounded-lg border border-slate-200 bg-white p-5 shadow-sm transition hover:shadow-md hover:border-slate-300"
     >
       <div className="flex items-start justify-between gap-2">
