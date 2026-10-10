@@ -12,6 +12,11 @@ type Stage = "input" | "extracting" | "matching" | "done";
 
 export default function DiscoverPage() {
   const [text, setText] = useState("");
+  const [age, setAge] = useState("");
+  const [state, setState] = useState("");
+  const [gender, setGender] = useState("");
+  const [income, setIncome] = useState("");
+  const [education, setEducation] = useState("");
   const [stage, setStage] = useState<Stage>("input");
   const [extraction, setExtraction] = useState<ProfileExtractionResult | null>(null);
   const [matches, setMatches] = useState<MatchedScheme[] | null>(null);
@@ -24,10 +29,35 @@ export default function DiscoverPage() {
     setStage("extracting");
 
     try {
+      // Combine text and structured inputs
+      let combinedText = inputText;
+      
+      // Add structured fields to the text if provided
+      const structured = [];
+      if (age) structured.push(`age ${age}`);
+      if (state) structured.push(`from ${state}`);
+      if (gender) structured.push(`${gender}`);
+      if (income) structured.push(`income ₹${income}`);
+      if (education) structured.push(`${education}`);
+      
+      if (structured.length > 0) {
+        combinedText = `${inputText} ${structured.join(", ")}`;
+      }
+
       const extractRes = await fetch("/api/profile/extract", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text: inputText }),
+        body: JSON.stringify({ 
+          text: combinedText,
+          // Pass structured fields for override
+          overrides: {
+            age: age ? parseInt(age) : undefined,
+            state: state || undefined,
+            gender: gender || undefined,
+            annualIncome: income ? parseInt(income) : undefined,
+            education: education || undefined,
+          }
+        }),
       });
       const extractData = await extractRes.json();
       if (!extractRes.ok) {
@@ -100,6 +130,75 @@ export default function DiscoverPage() {
           placeholder="e.g. I am a 19 year old female student from Odisha, SC category, family income around 1.5 lakh per year, studying B.Tech."
           className="w-full resize-none rounded-xl border border-slate-300 p-3 text-sm text-slate-800 placeholder:text-slate-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100"
         />
+
+        {/* Structured Input Fields */}
+        <div className="mt-4 grid grid-cols-2 gap-3 md:grid-cols-5">
+          <div>
+            <label htmlFor="age" className="block text-xs font-medium text-slate-600 mb-1">Age</label>
+            <input
+              id="age"
+              type="number"
+              min="0"
+              max="120"
+              value={age}
+              onChange={(e) => setAge(e.target.value)}
+              placeholder="e.g. 25"
+              className="w-full rounded-lg border border-slate-300 px-2 py-1.5 text-sm text-slate-800 placeholder:text-slate-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="state" className="block text-xs font-medium text-slate-600 mb-1">State/UT</label>
+            <input
+              id="state"
+              type="text"
+              value={state}
+              onChange={(e) => setState(e.target.value)}
+              placeholder="e.g. Odisha"
+              className="w-full rounded-lg border border-slate-300 px-2 py-1.5 text-sm text-slate-800 placeholder:text-slate-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="gender" className="block text-xs font-medium text-slate-600 mb-1">Gender</label>
+            <select
+              id="gender"
+              value={gender}
+              onChange={(e) => setGender(e.target.value)}
+              className="w-full rounded-lg border border-slate-300 px-2 py-1.5 text-sm text-slate-800 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100"
+            >
+              <option value="">Select</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div>
+            <label htmlFor="income" className="block text-xs font-medium text-slate-600 mb-1">Annual Income (₹)</label>
+            <input
+              id="income"
+              type="number"
+              min="0"
+              value={income}
+              onChange={(e) => setIncome(e.target.value)}
+              placeholder="e.g. 150000"
+              className="w-full rounded-lg border border-slate-300 px-2 py-1.5 text-sm text-slate-800 placeholder:text-slate-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="education" className="block text-xs font-medium text-slate-600 mb-1">Education/Occupation</label>
+            <input
+              id="education"
+              type="text"
+              value={education}
+              onChange={(e) => setEducation(e.target.value)}
+              placeholder="e.g. Student"
+              className="w-full rounded-lg border border-slate-300 px-2 py-1.5 text-sm text-slate-800 placeholder:text-slate-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100"
+            />
+          </div>
+        </div>
 
         <div className="mt-3 flex flex-wrap gap-2">
           {DEMO_PROMPTS.map((p) => (

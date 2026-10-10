@@ -7,6 +7,7 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json().catch(() => null);
     const text = typeof body?.text === "string" ? body.text.trim() : "";
+    const overrides = body?.overrides || {};
 
     if (!text || text.length < 5) {
       return NextResponse.json(
@@ -15,7 +16,14 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const result = await extractProfile(text);
+    let result = await extractProfile(text);
+
+    // Apply structured field overrides (prefer structured fields over extracted values)
+    if (overrides.age !== undefined) result.profile.age = overrides.age;
+    if (overrides.state) result.profile.state = overrides.state;
+    if (overrides.gender) result.profile.gender = overrides.gender;
+    if (overrides.annualIncome !== undefined) result.profile.familyIncome = overrides.annualIncome;
+    if (overrides.education) result.profile.educationLevel = overrides.education;
 
     try {
       const clientId = await getOrCreateClientId();
